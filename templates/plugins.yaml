@@ -1,0 +1,12 @@
+{{- range .Values.plugins }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "custom-apisix-plugin.name" $ }}-{{ .name }}
+  labels:
+    {{- include "custom-apisix-plugin.labels" $ | nindent 4 }}
+data:
+  {{ .filename }}: |
+{{ $.Files.Get (printf "plugins/%s" .location) | indent 4 }}
+{{- end }}

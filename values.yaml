@@ -1,0 +1,12 @@
+nameOverride: ""
+fullnameOverride: ""
+
+plugins:
+  # - name: Plugin name
+  #   filename: Plugin filename
+  #   location: Location path. Path is relative to the plugins directory
+  #   description: Plugin description
+  - name: rsa-jwt
+    filename: rsa-jwt.lua
+    location: rsa-jwt/rsa-jwt.lua
+    description: "RSA JWT verify plugin"
