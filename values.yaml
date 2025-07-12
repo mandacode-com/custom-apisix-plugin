@@ -10,3 +10,8 @@ plugins:
     filename: rsa-jwt.lua
     location: rsa-jwt/rsa-jwt.lua
     description: "RSA JWT verify plugin"
+
+  - name: custom-jwt-auth
+    filename: custom-jwt-auth.lua
+    location: jwt/custom-jwt-auth.lua
+    description: "Custom JWT Auth plugin"
