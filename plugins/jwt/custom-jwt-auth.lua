@@ -31,7 +31,7 @@ local schema = {
 			},
 		}, -- Mapping of JWT claims to request headers
 	},
-	required = { "key" },
+	required = { "key", "secret" }, -- Required fields for the plugin configuration
 	additionalProperties = false,
 }
 
