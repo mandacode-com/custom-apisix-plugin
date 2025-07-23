@@ -106,6 +106,11 @@ end
 
 -- @function access
 function _M.access(conf, ctx)
+	-- Empty headers
+	for _, mapping in ipairs(conf.payload_mapping) do
+		core.request.set_header(ctx, mapping.header, "")
+	end
+
 	local auth_header = core.request.header(ctx, "authorization")
 	local token = get_bearer_token(auth_header)
 
