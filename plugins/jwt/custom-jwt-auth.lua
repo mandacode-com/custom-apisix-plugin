@@ -72,24 +72,29 @@ end
 local function verify_jwt(token, key, algorithm)
 	local jwt_obj = jwt:load_jwt(token)
 	if not jwt_obj.valid or not jwt_obj.payload then
+		core.log.warn("Invalid JWT token: ", jwt_obj.reason or "unknown reason")
 		return nil, "Invalid JWT token"
 	end
 
 	if not jwt_obj.valid then
+		core.log.warn("JWT token is not valid: ", jwt_obj.reason or "unknown reason")
 		return nil, "JWT token is not valid"
 	end
 
 	if not jwt_obj.payload then
+		core.log.warn("JWT payload is missing")
 		return nil, "JWT payload is missing"
 	end
 
 	if jwt_obj.header.alg ~= algorithm then
+		core.log.warn("JWT algorithm mismatch: expected ", algorithm, ", got ", jwt_obj.header.alg)
 		return nil, "JWT algorithm mismatch"
 	end
 
 	local jwt_verified = jwt:verify_jwt_obj(key, jwt_obj, claim_spec)
 
 	if not jwt_verified.verified then
+		core.log.warn("JWT verification failed: ", jwt_verified.reason or "unknown reason")
 		return nil, "JWT verification failed"
 	end
 
@@ -106,6 +111,7 @@ function _M.access(conf, ctx)
 	local token = get_bearer_token(auth_header)
 
 	if not token then
+		core.log.warn("Missing or invalid Authorization header")
 		if conf.force_auth then
 			core.response.exit(401, { message = "Missing or Invalid Authorization header" })
 		end
@@ -114,6 +120,7 @@ function _M.access(conf, ctx)
 
 	local payload, err = verify_jwt(token, conf.secret, conf.algorithm)
 	if not payload then
+		core.log.warn("JWT verification failed: ", err)
 		if conf.force_auth then
 			core.response.exit(401, { message = err })
 		end
