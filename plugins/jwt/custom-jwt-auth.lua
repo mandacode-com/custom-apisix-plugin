@@ -45,7 +45,7 @@ local _M = {
 }
 
 local claim_spec = {
-	sub = validators.matches("^[0-9a-fA-F]{8}%-[0-9a-fA-F]{4}%-[0-9a-fA-F]{4}%-[0-9a-fA-F]{4}%-[0-9a-fA-F]{12}$"),
+	sub = validators.is_not_empty(),
 	exp = validators.is_not_expired(),
 	iat = validators.is_not_before(),
 }
