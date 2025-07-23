@@ -45,7 +45,6 @@ local _M = {
 }
 
 local claim_spec = {
-	sub = validators.is_not_empty(),
 	exp = validators.is_not_expired(),
 	iat = validators.is_not_before(),
 }
